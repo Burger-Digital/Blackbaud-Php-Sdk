@@ -1,69 +1,80 @@
 # BurgerDigital\BlackbaudPhpSdk\NameFormatApi
 
-All URIs are relative to *https://api.sky.blackbaud.com/constituent/v1*
+All URIs are relative to https://api.sky.blackbaud.com/constituent/v1.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createConstituentNameFormat**](NameFormatApi.md#createconstituentnameformat) | **POST** /nameformats | Name format (Create)
-[**createConstituentPrimaryNameFormat**](NameFormatApi.md#createconstituentprimarynameformat) | **POST** /primarynameformats | Primary name format (Create)
-[**deleteConstituentNameFormat**](NameFormatApi.md#deleteconstituentnameformat) | **DELETE** /nameformats/{name_format_id} | Name format (Delete)
-[**deleteConstituentPrimaryNameFormat**](NameFormatApi.md#deleteconstituentprimarynameformat) | **DELETE** /primarynameformats/{primary_name_format_id} | Primary name format (Delete)
-[**editConstituentNameFormat**](NameFormatApi.md#editconstituentnameformat) | **PATCH** /nameformats/{name_format_id} | Name format (Edit)
-[**editConstituentPrimaryNameFormat**](NameFormatApi.md#editconstituentprimarynameformat) | **PATCH** /primarynameformats/{primary_name_format_id} | Primary name format (Edit)
-[**getConstituentNameFormat**](NameFormatApi.md#getconstituentnameformat) | **GET** /constituents/nameformats/{name_format_id} | Name format (Get)
-[**getConstituentNameFormatSummary**](NameFormatApi.md#getconstituentnameformatsummary) | **GET** /constituents/{constituent_id}/nameformats/summary | Name format summary (Get)
-[**listNameFormatConfigurations**](NameFormatApi.md#listnameformatconfigurations) | **GET** /nameformatconfigurations | Name format configuration list
-[**listNameFormatTypes**](NameFormatApi.md#listnameformattypes) | **GET** /nameformattypes | Name format types
+[**createConstituentNameFormat()**](NameFormatApi.md#createConstituentNameFormat) | **POST** /nameformats | Name format (Create)
+[**createConstituentPrimaryNameFormat()**](NameFormatApi.md#createConstituentPrimaryNameFormat) | **POST** /primarynameformats | Primary name format (Create)
+[**deleteConstituentNameFormat()**](NameFormatApi.md#deleteConstituentNameFormat) | **DELETE** /nameformats/{name_format_id} | Name format (Delete)
+[**deleteConstituentPrimaryNameFormat()**](NameFormatApi.md#deleteConstituentPrimaryNameFormat) | **DELETE** /primarynameformats/{primary_name_format_id} | Primary name format (Delete)
+[**editConstituentNameFormat()**](NameFormatApi.md#editConstituentNameFormat) | **PATCH** /nameformats/{name_format_id} | Name format (Edit)
+[**editConstituentPrimaryNameFormat()**](NameFormatApi.md#editConstituentPrimaryNameFormat) | **PATCH** /primarynameformats/{primary_name_format_id} | Primary name format (Edit)
+[**getConstituentNameFormat()**](NameFormatApi.md#getConstituentNameFormat) | **GET** /constituents/nameformats/{name_format_id} | Name format (Get)
+[**getConstituentNameFormatSummary()**](NameFormatApi.md#getConstituentNameFormatSummary) | **GET** /constituents/{constituent_id}/nameformats/summary | Name format summary (Get)
+[**listNameFormatConfigurations()**](NameFormatApi.md#listNameFormatConfigurations) | **GET** /nameformatconfigurations | Name format configuration list
+[**listNameFormatTypes()**](NameFormatApi.md#listNameFormatTypes) | **GET** /nameformattypes | Name format types
 
-# **createConstituentNameFormat**
-> \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PostResponse createConstituentNameFormat($body)
+
+## `createConstituentNameFormat()`
+
+```php
+createConstituentNameFormat($name_format_add): \BurgerDigital\BlackbaudPhpSdk\Model\PostResponse
+```
 
 Name format (Create)
 
 Creates a name format.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$body = new \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatAdd(); // \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatAdd | An object that represents the name format to create.
+$name_format_add = new \BurgerDigital\BlackbaudPhpSdk\Model\NameFormatAdd(); // \BurgerDigital\BlackbaudPhpSdk\Model\NameFormatAdd | An object that represents the name format to create.
 
 try {
-    $result = $apiInstance->createConstituentNameFormat($body);
+    $result = $apiInstance->createConstituentNameFormat($name_format_add);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->createConstituentNameFormat: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatAdd**](../Model/NameFormatAdd.md)| An object that represents the name format to create. | [optional]
+ **name_format_add** | [**\BurgerDigital\BlackbaudPhpSdk\Model\NameFormatAdd**](../Model/NameFormatAdd.md)| An object that represents the name format to create. | [optional]
 
 ### Return type
 
-[**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PostResponse**](../Model/PostResponse.md)
+[**\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse**](../Model/PostResponse.md)
 
 ### Authorization
 
@@ -71,60 +82,72 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **createConstituentPrimaryNameFormat**
-> \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PostResponse createConstituentPrimaryNameFormat($body)
+## `createConstituentPrimaryNameFormat()`
+
+```php
+createConstituentPrimaryNameFormat($primary_name_format_add): \BurgerDigital\BlackbaudPhpSdk\Model\PostResponse
+```
 
 Primary name format (Create)
 
 Creates a primary name format.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$body = new \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PrimaryNameFormatAdd(); // \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PrimaryNameFormatAdd | An object that represents the primary name format to create.
+$primary_name_format_add = new \BurgerDigital\BlackbaudPhpSdk\Model\PrimaryNameFormatAdd(); // \BurgerDigital\BlackbaudPhpSdk\Model\PrimaryNameFormatAdd | An object that represents the primary name format to create.
 
 try {
-    $result = $apiInstance->createConstituentPrimaryNameFormat($body);
+    $result = $apiInstance->createConstituentPrimaryNameFormat($primary_name_format_add);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->createConstituentPrimaryNameFormat: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PrimaryNameFormatAdd**](../Model/PrimaryNameFormatAdd.md)| An object that represents the primary name format to create. | [optional]
+ **primary_name_format_add** | [**\BurgerDigital\BlackbaudPhpSdk\Model\PrimaryNameFormatAdd**](../Model/PrimaryNameFormatAdd.md)| An object that represents the primary name format to create. | [optional]
 
 ### Return type
 
-[**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PostResponse**](../Model/PostResponse.md)
+[**\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse**](../Model/PostResponse.md)
 
 ### Authorization
 
@@ -132,48 +155,60 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **deleteConstituentNameFormat**
-> deleteConstituentNameFormat($name_format_id)
+## `deleteConstituentNameFormat()`
+
+```php
+deleteConstituentNameFormat($name_format_id)
+```
 
 Name format (Delete)
 
 Deletes a constituent name format.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$name_format_id = "name_format_id_example"; // string | The immutable system record ID of the constituent name format to delete.
+$name_format_id = 'name_format_id_example'; // string | The immutable system record ID of the constituent name format to delete.
 
 try {
     $apiInstance->deleteConstituentNameFormat($name_format_id);
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->deleteConstituentNameFormat: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
@@ -192,48 +227,60 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **deleteConstituentPrimaryNameFormat**
-> deleteConstituentPrimaryNameFormat($primary_name_format_id)
+## `deleteConstituentPrimaryNameFormat()`
+
+```php
+deleteConstituentPrimaryNameFormat($primary_name_format_id)
+```
 
 Primary name format (Delete)
 
 Deletes a constituent primary name format.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$primary_name_format_id = "primary_name_format_id_example"; // string | The immutable system record ID of the constituent primary name format to delete.
+$primary_name_format_id = 'primary_name_format_id_example'; // string | The immutable system record ID of the constituent primary name format to delete.
 
 try {
     $apiInstance->deleteConstituentPrimaryNameFormat($primary_name_format_id);
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->deleteConstituentPrimaryNameFormat: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
@@ -252,49 +299,61 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **editConstituentNameFormat**
-> editConstituentNameFormat($name_format_id, $body)
+## `editConstituentNameFormat()`
+
+```php
+editConstituentNameFormat($name_format_id, $name_format_edit)
+```
 
 Name format (Edit)
 
 Edits a name format for a constituent.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$name_format_id = "name_format_id_example"; // string | The immutable system record ID of the name format to edit.
-$body = new \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatEdit(); // \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatEdit | An object that represents the properties of the name format to edit.
+$name_format_id = 'name_format_id_example'; // string | The immutable system record ID of the name format to edit.
+$name_format_edit = new \BurgerDigital\BlackbaudPhpSdk\Model\NameFormatEdit(); // \BurgerDigital\BlackbaudPhpSdk\Model\NameFormatEdit | An object that represents the properties of the name format to edit.
 
 try {
-    $apiInstance->editConstituentNameFormat($name_format_id, $body);
+    $apiInstance->editConstituentNameFormat($name_format_id, $name_format_edit);
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->editConstituentNameFormat: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
@@ -302,7 +361,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name_format_id** | **string**| The immutable system record ID of the name format to edit. |
- **body** | [**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatEdit**](../Model/NameFormatEdit.md)| An object that represents the properties of the name format to edit. | [optional]
+ **name_format_edit** | [**\BurgerDigital\BlackbaudPhpSdk\Model\NameFormatEdit**](../Model/NameFormatEdit.md)| An object that represents the properties of the name format to edit. | [optional]
 
 ### Return type
 
@@ -314,49 +373,61 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+- **Content-Type**: `application/json`
+- **Accept**: Not defined
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **editConstituentPrimaryNameFormat**
-> editConstituentPrimaryNameFormat($primary_name_format_id, $body)
+## `editConstituentPrimaryNameFormat()`
+
+```php
+editConstituentPrimaryNameFormat($primary_name_format_id, $primary_name_format_edit)
+```
 
 Primary name format (Edit)
 
 Edits a primary name format for a constituent.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$primary_name_format_id = "primary_name_format_id_example"; // string | The immutable system record ID of the primary name format to edit.
-$body = new \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PrimaryNameFormatEdit(); // \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PrimaryNameFormatEdit | An object that represents the properties of the primary name format to edit.
+$primary_name_format_id = 'primary_name_format_id_example'; // string | The immutable system record ID of the primary name format to edit.
+$primary_name_format_edit = new \BurgerDigital\BlackbaudPhpSdk\Model\PrimaryNameFormatEdit(); // \BurgerDigital\BlackbaudPhpSdk\Model\PrimaryNameFormatEdit | An object that represents the properties of the primary name format to edit.
 
 try {
-    $apiInstance->editConstituentPrimaryNameFormat($primary_name_format_id, $body);
+    $apiInstance->editConstituentPrimaryNameFormat($primary_name_format_id, $primary_name_format_edit);
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->editConstituentPrimaryNameFormat: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
@@ -364,7 +435,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **primary_name_format_id** | **string**| The immutable system record ID of the primary name format to edit. |
- **body** | [**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\PrimaryNameFormatEdit**](../Model/PrimaryNameFormatEdit.md)| An object that represents the properties of the primary name format to edit. | [optional]
+ **primary_name_format_edit** | [**\BurgerDigital\BlackbaudPhpSdk\Model\PrimaryNameFormatEdit**](../Model/PrimaryNameFormatEdit.md)| An object that represents the properties of the primary name format to edit. | [optional]
 
 ### Return type
 
@@ -376,41 +447,54 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+- **Content-Type**: `application/json`
+- **Accept**: Not defined
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **getConstituentNameFormat**
-> \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatSummaryRead getConstituentNameFormat($name_format_id)
+## `getConstituentNameFormat()`
+
+```php
+getConstituentNameFormat($name_format_id): \BurgerDigital\BlackbaudPhpSdk\Model\NameFormatSummaryRead
+```
 
 Name format (Get)
 
 Returns the name format.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$name_format_id = "name_format_id_example"; // string | The immutable system record ID of the name format to retrieve.
+$name_format_id = 'name_format_id_example'; // string | The immutable system record ID of the name format to retrieve.
 
 try {
     $result = $apiInstance->getConstituentNameFormat($name_format_id);
@@ -418,7 +502,6 @@ try {
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->getConstituentNameFormat: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
@@ -429,7 +512,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatSummaryRead**](../Model/NameFormatSummaryRead.md)
+[**\BurgerDigital\BlackbaudPhpSdk\Model\NameFormatSummaryRead**](../Model/NameFormatSummaryRead.md)
 
 ### Authorization
 
@@ -437,41 +520,54 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **getConstituentNameFormatSummary**
-> \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatSummaryRead getConstituentNameFormatSummary($constituent_id)
+## `getConstituentNameFormatSummary()`
+
+```php
+getConstituentNameFormatSummary($constituent_id): \BurgerDigital\BlackbaudPhpSdk\Model\NameFormatSummaryRead
+```
 
 Name format summary (Get)
 
 Returns the name format summary for a constituent.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$constituent_id = "constituent_id_example"; // string | The immutable system record ID of the constituent to retrieve the name format summary for.
+$constituent_id = 'constituent_id_example'; // string | The immutable system record ID of the constituent to retrieve the name format summary for.
 
 try {
     $result = $apiInstance->getConstituentNameFormatSummary($constituent_id);
@@ -479,7 +575,6 @@ try {
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->getConstituentNameFormatSummary: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
@@ -490,7 +585,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\NameFormatSummaryRead**](../Model/NameFormatSummaryRead.md)
+[**\BurgerDigital\BlackbaudPhpSdk\Model\NameFormatSummaryRead**](../Model/NameFormatSummaryRead.md)
 
 ### Authorization
 
@@ -498,41 +593,54 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **listNameFormatConfigurations**
-> \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\ApiCollectionNameFormatConfigurationRead listNameFormatConfigurations($constituent_id, $limit, $offset)
+## `listNameFormatConfigurations()`
+
+```php
+listNameFormatConfigurations($constituent_id, $limit, $offset): \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionNameFormatConfigurationRead
+```
 
 Name format configuration list
 
 Returns a list of all available name format configurations.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
     $config
 );
-$constituent_id = "constituent_id_example"; // string | The ID of the constituent to display the name format configurations in.
+$constituent_id = 'constituent_id_example'; // string | The ID of the constituent to display the name format configurations in.
 $limit = 56; // int | Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000.
 $offset = 56; // int | Format - int32. Represents the number of records to skip. For use with pagination.
 
@@ -542,7 +650,6 @@ try {
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->listNameFormatConfigurations: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
@@ -555,7 +662,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\ApiCollectionNameFormatConfigurationRead**](../Model/ApiCollectionNameFormatConfigurationRead.md)
+[**\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionNameFormatConfigurationRead**](../Model/ApiCollectionNameFormatConfigurationRead.md)
 
 ### Authorization
 
@@ -563,35 +670,48 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
-# **listNameFormatTypes**
-> \BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\ApiCollectionString listNameFormatTypes()
+## `listNameFormatTypes()`
+
+```php
+listNameFormatTypes(): \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
+```
 
 Name format types
 
 Returns a list of active name format types.
 
 ### Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
+
+
 // Configure API key authorization: apiKeyHeader
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('Bb-Api-Subscription-Key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');// Configure API key authorization: apiKeyQuery
+// $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Bb-Api-Subscription-Key', 'Bearer');
+
+// Configure API key authorization: apiKeyQuery
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKey('subscription-key', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setApiKeyPrefix('subscription-key', 'Bearer');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceAuthorizationCode
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 // Configure OAuth2 access token for authorization: oauth2Blackbaud OAuth 2.0 ServiceImplicit
 $config = BurgerDigital\BlackbaudPhpSdk\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
+
+$apiInstance = new BurgerDigital\BlackbaudPhpSdk\Api\NameFormatApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -604,15 +724,15 @@ try {
 } catch (Exception $e) {
     echo 'Exception when calling NameFormatApi->listNameFormatTypes: ', $e->getMessage(), PHP_EOL;
 }
-?>
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
 
-[**\BurgerDigital\BlackbaudPhpSdk\BurgerDigital\BlackbaudPhpSdk\Models\ApiCollectionString**](../Model/ApiCollectionString.md)
+[**\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString**](../Model/ApiCollectionString.md)
 
 ### Authorization
 
@@ -620,8 +740,9 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
 
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
