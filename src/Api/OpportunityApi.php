@@ -1,6 +1,6 @@
 <?php
 /**
- * ConstituentEducationApi
+ * OpportunityApi
  * PHP version 7.2
  *
  * @category Class
@@ -10,9 +10,9 @@
  */
 
 /**
- * Constituent
+ * Opportunity
  *
- * This API manages constituent information and related entities such as addresses, phones, emails, and notes.
+ * This API manages opportunity information and related entities such as opportunity fundraisers, opportunity attachments, and opportunity custom fields.
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -40,14 +40,14 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 
 /**
- * ConstituentEducationApi Class Doc Comment
+ * OpportunityApi Class Doc Comment
  *
  * @category Class
  * @package  BurgerDigital\BlackbaudPhpSdk
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  */
-class ConstituentEducationApi
+class OpportunityApi
 {
     /**
      * @var ClientInterface
@@ -116,36 +116,313 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation createConstituentEducation
+     * Operation createDocument
      *
-     * Education (Create)
+     * Document (Create)
      *
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationAdd $education_add An object that represents the education to create. (optional)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\NewDocumentInfo $new_document_info An object that represents the document to upload. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\FileDefinition
+     */
+    public function createDocument($new_document_info = null)
+    {
+        list($response) = $this->createDocumentWithHttpInfo($new_document_info);
+        return $response;
+    }
+
+    /**
+     * Operation createDocumentWithHttpInfo
+     *
+     * Document (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\NewDocumentInfo $new_document_info An object that represents the document to upload. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\FileDefinition, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createDocumentWithHttpInfo($new_document_info = null)
+    {
+        $request = $this->createDocumentRequest($new_document_info);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\FileDefinition' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\FileDefinition', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\FileDefinition';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\FileDefinition',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation createDocumentAsync
+     *
+     * Document (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\NewDocumentInfo $new_document_info An object that represents the document to upload. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createDocumentAsync($new_document_info = null)
+    {
+        return $this->createDocumentAsyncWithHttpInfo($new_document_info)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation createDocumentAsyncWithHttpInfo
+     *
+     * Document (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\NewDocumentInfo $new_document_info An object that represents the document to upload. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createDocumentAsyncWithHttpInfo($new_document_info = null)
+    {
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\FileDefinition';
+        $request = $this->createDocumentRequest($new_document_info);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'createDocument'
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\NewDocumentInfo $new_document_info An object that represents the document to upload. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function createDocumentRequest($new_document_info = null)
+    {
+
+        $resourcePath = '/documents';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($new_document_info)) {
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($new_document_info));
+            } else {
+                $httpBody = $new_document_info;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation createOpportunity
+     *
+     * Opportunity (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityAdd $opportunity_add An object that represents the opportunity to create. (optional)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \BurgerDigital\BlackbaudPhpSdk\Model\PostResponse
      */
-    public function createConstituentEducation($education_add = null)
+    public function createOpportunity($opportunity_add = null)
     {
-        list($response) = $this->createConstituentEducationWithHttpInfo($education_add);
+        list($response) = $this->createOpportunityWithHttpInfo($opportunity_add);
         return $response;
     }
 
     /**
-     * Operation createConstituentEducationWithHttpInfo
+     * Operation createOpportunityWithHttpInfo
      *
-     * Education (Create)
+     * Opportunity (Create)
      *
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationAdd $education_add An object that represents the education to create. (optional)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityAdd $opportunity_add An object that represents the opportunity to create. (optional)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\PostResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createConstituentEducationWithHttpInfo($education_add = null)
+    public function createOpportunityWithHttpInfo($opportunity_add = null)
     {
-        $request = $this->createConstituentEducationRequest($education_add);
+        $request = $this->createOpportunityRequest($opportunity_add);
 
         try {
             $options = $this->createHttpClientOption();
@@ -221,18 +498,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation createConstituentEducationAsync
+     * Operation createOpportunityAsync
      *
-     * Education (Create)
+     * Opportunity (Create)
      *
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationAdd $education_add An object that represents the education to create. (optional)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityAdd $opportunity_add An object that represents the opportunity to create. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createConstituentEducationAsync($education_add = null)
+    public function createOpportunityAsync($opportunity_add = null)
     {
-        return $this->createConstituentEducationAsyncWithHttpInfo($education_add)
+        return $this->createOpportunityAsyncWithHttpInfo($opportunity_add)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -241,19 +518,19 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation createConstituentEducationAsyncWithHttpInfo
+     * Operation createOpportunityAsyncWithHttpInfo
      *
-     * Education (Create)
+     * Opportunity (Create)
      *
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationAdd $education_add An object that represents the education to create. (optional)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityAdd $opportunity_add An object that represents the opportunity to create. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createConstituentEducationAsyncWithHttpInfo($education_add = null)
+    public function createOpportunityAsyncWithHttpInfo($opportunity_add = null)
     {
         $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse';
-        $request = $this->createConstituentEducationRequest($education_add);
+        $request = $this->createOpportunityRequest($opportunity_add);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -290,17 +567,17 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'createConstituentEducation'
+     * Create request for operation 'createOpportunity'
      *
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationAdd $education_add An object that represents the education to create. (optional)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityAdd $opportunity_add An object that represents the opportunity to create. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createConstituentEducationRequest($education_add = null)
+    public function createOpportunityRequest($opportunity_add = null)
     {
 
-        $resourcePath = '/educations';
+        $resourcePath = '/opportunities';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -323,11 +600,11 @@ class ConstituentEducationApi
         }
 
         // for model (json/xml)
-        if (isset($education_add)) {
+        if (isset($opportunity_add)) {
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($education_add));
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($opportunity_add));
             } else {
-                $httpBody = $education_add;
+                $httpBody = $opportunity_add;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -393,35 +670,589 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation deleteConstituentEducation
+     * Operation createOpportunityAttachment
      *
-     * Education (Delete)
+     * Opportunity attachment (Create)
      *
-     * @param  string $education_id The immutable system record ID of the education to delete. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentAdd $attachment_add An object that represents the attachment to create. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\PostResponse
+     */
+    public function createOpportunityAttachment($attachment_add = null)
+    {
+        list($response) = $this->createOpportunityAttachmentWithHttpInfo($attachment_add);
+        return $response;
+    }
+
+    /**
+     * Operation createOpportunityAttachmentWithHttpInfo
+     *
+     * Opportunity attachment (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentAdd $attachment_add An object that represents the attachment to create. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\PostResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createOpportunityAttachmentWithHttpInfo($attachment_add = null)
+    {
+        $request = $this->createOpportunityAttachmentRequest($attachment_add);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation createOpportunityAttachmentAsync
+     *
+     * Opportunity attachment (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentAdd $attachment_add An object that represents the attachment to create. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createOpportunityAttachmentAsync($attachment_add = null)
+    {
+        return $this->createOpportunityAttachmentAsyncWithHttpInfo($attachment_add)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation createOpportunityAttachmentAsyncWithHttpInfo
+     *
+     * Opportunity attachment (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentAdd $attachment_add An object that represents the attachment to create. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createOpportunityAttachmentAsyncWithHttpInfo($attachment_add = null)
+    {
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse';
+        $request = $this->createOpportunityAttachmentRequest($attachment_add);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'createOpportunityAttachment'
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentAdd $attachment_add An object that represents the attachment to create. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function createOpportunityAttachmentRequest($attachment_add = null)
+    {
+
+        $resourcePath = '/opportunities/attachments';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($attachment_add)) {
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($attachment_add));
+            } else {
+                $httpBody = $attachment_add;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation createOpportunityCustomField
+     *
+     * Opportunity custom field (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldAdd $custom_field_add An object that represents the custom field to create. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\PostResponse
+     */
+    public function createOpportunityCustomField($custom_field_add = null)
+    {
+        list($response) = $this->createOpportunityCustomFieldWithHttpInfo($custom_field_add);
+        return $response;
+    }
+
+    /**
+     * Operation createOpportunityCustomFieldWithHttpInfo
+     *
+     * Opportunity custom field (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldAdd $custom_field_add An object that represents the custom field to create. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\PostResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createOpportunityCustomFieldWithHttpInfo($custom_field_add = null)
+    {
+        $request = $this->createOpportunityCustomFieldRequest($custom_field_add);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation createOpportunityCustomFieldAsync
+     *
+     * Opportunity custom field (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldAdd $custom_field_add An object that represents the custom field to create. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createOpportunityCustomFieldAsync($custom_field_add = null)
+    {
+        return $this->createOpportunityCustomFieldAsyncWithHttpInfo($custom_field_add)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation createOpportunityCustomFieldAsyncWithHttpInfo
+     *
+     * Opportunity custom field (Create)
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldAdd $custom_field_add An object that represents the custom field to create. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createOpportunityCustomFieldAsyncWithHttpInfo($custom_field_add = null)
+    {
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\PostResponse';
+        $request = $this->createOpportunityCustomFieldRequest($custom_field_add);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'createOpportunityCustomField'
+     *
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldAdd $custom_field_add An object that represents the custom field to create. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function createOpportunityCustomFieldRequest($custom_field_add = null)
+    {
+
+        $resourcePath = '/opportunities/customfields';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($custom_field_add)) {
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($custom_field_add));
+            } else {
+                $httpBody = $custom_field_add;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation deleteOpportunityAttachment
+     *
+     * Opportunity attachment (Delete)
+     *
+     * @param  string $attachment_id The immutable system record ID of the attachment to delete. (required)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteConstituentEducation($education_id)
+    public function deleteOpportunityAttachment($attachment_id)
     {
-        $this->deleteConstituentEducationWithHttpInfo($education_id);
+        $this->deleteOpportunityAttachmentWithHttpInfo($attachment_id);
     }
 
     /**
-     * Operation deleteConstituentEducationWithHttpInfo
+     * Operation deleteOpportunityAttachmentWithHttpInfo
      *
-     * Education (Delete)
+     * Opportunity attachment (Delete)
      *
-     * @param  string $education_id The immutable system record ID of the education to delete. (required)
+     * @param  string $attachment_id The immutable system record ID of the attachment to delete. (required)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteConstituentEducationWithHttpInfo($education_id)
+    public function deleteOpportunityAttachmentWithHttpInfo($attachment_id)
     {
-        $request = $this->deleteConstituentEducationRequest($education_id);
+        $request = $this->deleteOpportunityAttachmentRequest($attachment_id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -461,18 +1292,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation deleteConstituentEducationAsync
+     * Operation deleteOpportunityAttachmentAsync
      *
-     * Education (Delete)
+     * Opportunity attachment (Delete)
      *
-     * @param  string $education_id The immutable system record ID of the education to delete. (required)
+     * @param  string $attachment_id The immutable system record ID of the attachment to delete. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteConstituentEducationAsync($education_id)
+    public function deleteOpportunityAttachmentAsync($attachment_id)
     {
-        return $this->deleteConstituentEducationAsyncWithHttpInfo($education_id)
+        return $this->deleteOpportunityAttachmentAsyncWithHttpInfo($attachment_id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -481,19 +1312,19 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation deleteConstituentEducationAsyncWithHttpInfo
+     * Operation deleteOpportunityAttachmentAsyncWithHttpInfo
      *
-     * Education (Delete)
+     * Opportunity attachment (Delete)
      *
-     * @param  string $education_id The immutable system record ID of the education to delete. (required)
+     * @param  string $attachment_id The immutable system record ID of the attachment to delete. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteConstituentEducationAsyncWithHttpInfo($education_id)
+    public function deleteOpportunityAttachmentAsyncWithHttpInfo($attachment_id)
     {
         $returnType = '';
-        $request = $this->deleteConstituentEducationRequest($education_id);
+        $request = $this->deleteOpportunityAttachmentRequest($attachment_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -519,23 +1350,23 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'deleteConstituentEducation'
+     * Create request for operation 'deleteOpportunityAttachment'
      *
-     * @param  string $education_id The immutable system record ID of the education to delete. (required)
+     * @param  string $attachment_id The immutable system record ID of the attachment to delete. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function deleteConstituentEducationRequest($education_id)
+    public function deleteOpportunityAttachmentRequest($attachment_id)
     {
-        // verify the required parameter 'education_id' is set
-        if ($education_id === null || (is_array($education_id) && count($education_id) === 0)) {
+        // verify the required parameter 'attachment_id' is set
+        if ($attachment_id === null || (is_array($attachment_id) && count($attachment_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $education_id when calling deleteConstituentEducation'
+                'Missing the required parameter $attachment_id when calling deleteOpportunityAttachment'
             );
         }
 
-        $resourcePath = '/educations/{education_id}';
+        $resourcePath = '/opportunities/attachments/{attachment_id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -545,10 +1376,10 @@ class ConstituentEducationApi
 
 
         // path params
-        if ($education_id !== null) {
+        if ($attachment_id !== null) {
             $resourcePath = str_replace(
-                '{' . 'education_id' . '}',
-                ObjectSerializer::toPathValue($education_id),
+                '{' . 'attachment_id' . '}',
+                ObjectSerializer::toPathValue($attachment_id),
                 $resourcePath
             );
         }
@@ -630,37 +1461,35 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation editConstituentEducation
+     * Operation deleteOpportunityCustomField
      *
-     * Education (Edit)
+     * Opportunity custom field (Delete)
      *
-     * @param  string $education_id The immutable system record ID of the education to edit. (required)
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationEdit $education_edit An object that represents the properties of the education to edit. (optional)
+     * @param  string $custom_field_id The immutable system record ID of the custom field to delete. (required)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function editConstituentEducation($education_id, $education_edit = null)
+    public function deleteOpportunityCustomField($custom_field_id)
     {
-        $this->editConstituentEducationWithHttpInfo($education_id, $education_edit);
+        $this->deleteOpportunityCustomFieldWithHttpInfo($custom_field_id);
     }
 
     /**
-     * Operation editConstituentEducationWithHttpInfo
+     * Operation deleteOpportunityCustomFieldWithHttpInfo
      *
-     * Education (Edit)
+     * Opportunity custom field (Delete)
      *
-     * @param  string $education_id The immutable system record ID of the education to edit. (required)
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationEdit $education_edit An object that represents the properties of the education to edit. (optional)
+     * @param  string $custom_field_id The immutable system record ID of the custom field to delete. (required)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function editConstituentEducationWithHttpInfo($education_id, $education_edit = null)
+    public function deleteOpportunityCustomFieldWithHttpInfo($custom_field_id)
     {
-        $request = $this->editConstituentEducationRequest($education_id, $education_edit);
+        $request = $this->deleteOpportunityCustomFieldRequest($custom_field_id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -700,19 +1529,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation editConstituentEducationAsync
+     * Operation deleteOpportunityCustomFieldAsync
      *
-     * Education (Edit)
+     * Opportunity custom field (Delete)
      *
-     * @param  string $education_id The immutable system record ID of the education to edit. (required)
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationEdit $education_edit An object that represents the properties of the education to edit. (optional)
+     * @param  string $custom_field_id The immutable system record ID of the custom field to delete. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function editConstituentEducationAsync($education_id, $education_edit = null)
+    public function deleteOpportunityCustomFieldAsync($custom_field_id)
     {
-        return $this->editConstituentEducationAsyncWithHttpInfo($education_id, $education_edit)
+        return $this->deleteOpportunityCustomFieldAsyncWithHttpInfo($custom_field_id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -721,20 +1549,19 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation editConstituentEducationAsyncWithHttpInfo
+     * Operation deleteOpportunityCustomFieldAsyncWithHttpInfo
      *
-     * Education (Edit)
+     * Opportunity custom field (Delete)
      *
-     * @param  string $education_id The immutable system record ID of the education to edit. (required)
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationEdit $education_edit An object that represents the properties of the education to edit. (optional)
+     * @param  string $custom_field_id The immutable system record ID of the custom field to delete. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function editConstituentEducationAsyncWithHttpInfo($education_id, $education_edit = null)
+    public function deleteOpportunityCustomFieldAsyncWithHttpInfo($custom_field_id)
     {
         $returnType = '';
-        $request = $this->editConstituentEducationRequest($education_id, $education_edit);
+        $request = $this->deleteOpportunityCustomFieldRequest($custom_field_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -760,24 +1587,23 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'editConstituentEducation'
+     * Create request for operation 'deleteOpportunityCustomField'
      *
-     * @param  string $education_id The immutable system record ID of the education to edit. (required)
-     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\EducationEdit $education_edit An object that represents the properties of the education to edit. (optional)
+     * @param  string $custom_field_id The immutable system record ID of the custom field to delete. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function editConstituentEducationRequest($education_id, $education_edit = null)
+    public function deleteOpportunityCustomFieldRequest($custom_field_id)
     {
-        // verify the required parameter 'education_id' is set
-        if ($education_id === null || (is_array($education_id) && count($education_id) === 0)) {
+        // verify the required parameter 'custom_field_id' is set
+        if ($custom_field_id === null || (is_array($custom_field_id) && count($custom_field_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $education_id when calling editConstituentEducation'
+                'Missing the required parameter $custom_field_id when calling deleteOpportunityCustomField'
             );
         }
 
-        $resourcePath = '/educations/{education_id}';
+        $resourcePath = '/opportunities/customfields/{custom_field_id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -787,10 +1613,252 @@ class ConstituentEducationApi
 
 
         // path params
-        if ($education_id !== null) {
+        if ($custom_field_id !== null) {
             $resourcePath = str_replace(
-                '{' . 'education_id' . '}',
-                ObjectSerializer::toPathValue($education_id),
+                '{' . 'custom_field_id' . '}',
+                ObjectSerializer::toPathValue($custom_field_id),
+                $resourcePath
+            );
+        }
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'DELETE',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation editOpportunity
+     *
+     * Opportunity (Edit)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityEdit $opportunity_edit An object that represents the properties of the opportunity to edit. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function editOpportunity($opportunity_id, $opportunity_edit = null)
+    {
+        $this->editOpportunityWithHttpInfo($opportunity_id, $opportunity_edit);
+    }
+
+    /**
+     * Operation editOpportunityWithHttpInfo
+     *
+     * Opportunity (Edit)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityEdit $opportunity_edit An object that represents the properties of the opportunity to edit. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function editOpportunityWithHttpInfo($opportunity_id, $opportunity_edit = null)
+    {
+        $request = $this->editOpportunityRequest($opportunity_id, $opportunity_edit);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation editOpportunityAsync
+     *
+     * Opportunity (Edit)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityEdit $opportunity_edit An object that represents the properties of the opportunity to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function editOpportunityAsync($opportunity_id, $opportunity_edit = null)
+    {
+        return $this->editOpportunityAsyncWithHttpInfo($opportunity_id, $opportunity_edit)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation editOpportunityAsyncWithHttpInfo
+     *
+     * Opportunity (Edit)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityEdit $opportunity_edit An object that represents the properties of the opportunity to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function editOpportunityAsyncWithHttpInfo($opportunity_id, $opportunity_edit = null)
+    {
+        $returnType = '';
+        $request = $this->editOpportunityRequest($opportunity_id, $opportunity_edit);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'editOpportunity'
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityEdit $opportunity_edit An object that represents the properties of the opportunity to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function editOpportunityRequest($opportunity_id, $opportunity_edit = null)
+    {
+        // verify the required parameter 'opportunity_id' is set
+        if ($opportunity_id === null || (is_array($opportunity_id) && count($opportunity_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $opportunity_id when calling editOpportunity'
+            );
+        }
+
+        $resourcePath = '/opportunities/{opportunity_id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($opportunity_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'opportunity_id' . '}',
+                ObjectSerializer::toPathValue($opportunity_id),
                 $resourcePath
             );
         }
@@ -808,11 +1876,11 @@ class ConstituentEducationApi
         }
 
         // for model (json/xml)
-        if (isset($education_edit)) {
+        if (isset($opportunity_edit)) {
             if ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($education_edit));
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($opportunity_edit));
             } else {
-                $httpBody = $education_edit;
+                $httpBody = $opportunity_edit;
             }
         } elseif (count($formParams) > 0) {
             if ($multipart) {
@@ -878,36 +1946,532 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation getConstituentEducation
+     * Operation editOpportunityAttachment
      *
-     * Education (Get)
+     * Opportunity attachment (Edit)
      *
-     * @param  string $education_id The immutable system record ID of the education record to retrieve. (required)
+     * @param  string $attachment_id The immutable system record ID of the attachment to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentEdit $attachment_edit An object that represents updated properties of the attachment to edit. (optional)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\EducationRead
+     * @return void
      */
-    public function getConstituentEducation($education_id)
+    public function editOpportunityAttachment($attachment_id, $attachment_edit = null)
     {
-        list($response) = $this->getConstituentEducationWithHttpInfo($education_id);
+        $this->editOpportunityAttachmentWithHttpInfo($attachment_id, $attachment_edit);
+    }
+
+    /**
+     * Operation editOpportunityAttachmentWithHttpInfo
+     *
+     * Opportunity attachment (Edit)
+     *
+     * @param  string $attachment_id The immutable system record ID of the attachment to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentEdit $attachment_edit An object that represents updated properties of the attachment to edit. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function editOpportunityAttachmentWithHttpInfo($attachment_id, $attachment_edit = null)
+    {
+        $request = $this->editOpportunityAttachmentRequest($attachment_id, $attachment_edit);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation editOpportunityAttachmentAsync
+     *
+     * Opportunity attachment (Edit)
+     *
+     * @param  string $attachment_id The immutable system record ID of the attachment to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentEdit $attachment_edit An object that represents updated properties of the attachment to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function editOpportunityAttachmentAsync($attachment_id, $attachment_edit = null)
+    {
+        return $this->editOpportunityAttachmentAsyncWithHttpInfo($attachment_id, $attachment_edit)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation editOpportunityAttachmentAsyncWithHttpInfo
+     *
+     * Opportunity attachment (Edit)
+     *
+     * @param  string $attachment_id The immutable system record ID of the attachment to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentEdit $attachment_edit An object that represents updated properties of the attachment to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function editOpportunityAttachmentAsyncWithHttpInfo($attachment_id, $attachment_edit = null)
+    {
+        $returnType = '';
+        $request = $this->editOpportunityAttachmentRequest($attachment_id, $attachment_edit);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'editOpportunityAttachment'
+     *
+     * @param  string $attachment_id The immutable system record ID of the attachment to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\AttachmentEdit $attachment_edit An object that represents updated properties of the attachment to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function editOpportunityAttachmentRequest($attachment_id, $attachment_edit = null)
+    {
+        // verify the required parameter 'attachment_id' is set
+        if ($attachment_id === null || (is_array($attachment_id) && count($attachment_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $attachment_id when calling editOpportunityAttachment'
+            );
+        }
+
+        $resourcePath = '/opportunities/attachments/{attachment_id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($attachment_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'attachment_id' . '}',
+                ObjectSerializer::toPathValue($attachment_id),
+                $resourcePath
+            );
+        }
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($attachment_edit)) {
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($attachment_edit));
+            } else {
+                $httpBody = $attachment_edit;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'PATCH',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation editOpportunityCustomField
+     *
+     * Opportunity custom field (Edit)
+     *
+     * @param  string $custom_field_id The immutable system record ID of the custom field to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldEdit $custom_field_edit An object that represents the custom field to edit. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function editOpportunityCustomField($custom_field_id, $custom_field_edit = null)
+    {
+        $this->editOpportunityCustomFieldWithHttpInfo($custom_field_id, $custom_field_edit);
+    }
+
+    /**
+     * Operation editOpportunityCustomFieldWithHttpInfo
+     *
+     * Opportunity custom field (Edit)
+     *
+     * @param  string $custom_field_id The immutable system record ID of the custom field to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldEdit $custom_field_edit An object that represents the custom field to edit. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function editOpportunityCustomFieldWithHttpInfo($custom_field_id, $custom_field_edit = null)
+    {
+        $request = $this->editOpportunityCustomFieldRequest($custom_field_id, $custom_field_edit);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            return [null, $statusCode, $response->getHeaders()];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation editOpportunityCustomFieldAsync
+     *
+     * Opportunity custom field (Edit)
+     *
+     * @param  string $custom_field_id The immutable system record ID of the custom field to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldEdit $custom_field_edit An object that represents the custom field to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function editOpportunityCustomFieldAsync($custom_field_id, $custom_field_edit = null)
+    {
+        return $this->editOpportunityCustomFieldAsyncWithHttpInfo($custom_field_id, $custom_field_edit)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation editOpportunityCustomFieldAsyncWithHttpInfo
+     *
+     * Opportunity custom field (Edit)
+     *
+     * @param  string $custom_field_id The immutable system record ID of the custom field to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldEdit $custom_field_edit An object that represents the custom field to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function editOpportunityCustomFieldAsyncWithHttpInfo($custom_field_id, $custom_field_edit = null)
+    {
+        $returnType = '';
+        $request = $this->editOpportunityCustomFieldRequest($custom_field_id, $custom_field_edit);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'editOpportunityCustomField'
+     *
+     * @param  string $custom_field_id The immutable system record ID of the custom field to edit. (required)
+     * @param  \BurgerDigital\BlackbaudPhpSdk\Model\CustomFieldEdit $custom_field_edit An object that represents the custom field to edit. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function editOpportunityCustomFieldRequest($custom_field_id, $custom_field_edit = null)
+    {
+        // verify the required parameter 'custom_field_id' is set
+        if ($custom_field_id === null || (is_array($custom_field_id) && count($custom_field_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $custom_field_id when calling editOpportunityCustomField'
+            );
+        }
+
+        $resourcePath = '/opportunities/customfields/{custom_field_id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($custom_field_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'custom_field_id' . '}',
+                ObjectSerializer::toPathValue($custom_field_id),
+                $resourcePath
+            );
+        }
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                []
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                [],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($custom_field_edit)) {
+            if ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($custom_field_edit));
+            } else {
+                $httpBody = $custom_field_edit;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'PATCH',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getOpportunity
+     *
+     * Opportunity (Get)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve information for. (required)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityRead
+     */
+    public function getOpportunity($opportunity_id)
+    {
+        list($response) = $this->getOpportunityWithHttpInfo($opportunity_id);
         return $response;
     }
 
     /**
-     * Operation getConstituentEducationWithHttpInfo
+     * Operation getOpportunityWithHttpInfo
      *
-     * Education (Get)
+     * Opportunity (Get)
      *
-     * @param  string $education_id The immutable system record ID of the education record to retrieve. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve information for. (required)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\EducationRead, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\OpportunityRead, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getConstituentEducationWithHttpInfo($education_id)
+    public function getOpportunityWithHttpInfo($opportunity_id)
     {
-        $request = $this->getConstituentEducationRequest($education_id);
+        $request = $this->getOpportunityRequest($opportunity_id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -940,20 +2504,20 @@ class ConstituentEducationApi
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\EducationRead' === '\SplFileObject') {
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\OpportunityRead' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\EducationRead', []),
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\OpportunityRead', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\EducationRead';
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\OpportunityRead';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -972,7 +2536,7 @@ class ConstituentEducationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\EducationRead',
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\OpportunityRead',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -983,18 +2547,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation getConstituentEducationAsync
+     * Operation getOpportunityAsync
      *
-     * Education (Get)
+     * Opportunity (Get)
      *
-     * @param  string $education_id The immutable system record ID of the education record to retrieve. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve information for. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getConstituentEducationAsync($education_id)
+    public function getOpportunityAsync($opportunity_id)
     {
-        return $this->getConstituentEducationAsyncWithHttpInfo($education_id)
+        return $this->getOpportunityAsyncWithHttpInfo($opportunity_id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1003,19 +2567,19 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation getConstituentEducationAsyncWithHttpInfo
+     * Operation getOpportunityAsyncWithHttpInfo
      *
-     * Education (Get)
+     * Opportunity (Get)
      *
-     * @param  string $education_id The immutable system record ID of the education record to retrieve. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve information for. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getConstituentEducationAsyncWithHttpInfo($education_id)
+    public function getOpportunityAsyncWithHttpInfo($opportunity_id)
     {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\EducationRead';
-        $request = $this->getConstituentEducationRequest($education_id);
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\OpportunityRead';
+        $request = $this->getOpportunityRequest($opportunity_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1052,23 +2616,23 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'getConstituentEducation'
+     * Create request for operation 'getOpportunity'
      *
-     * @param  string $education_id The immutable system record ID of the education record to retrieve. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve information for. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getConstituentEducationRequest($education_id)
+    public function getOpportunityRequest($opportunity_id)
     {
-        // verify the required parameter 'education_id' is set
-        if ($education_id === null || (is_array($education_id) && count($education_id) === 0)) {
+        // verify the required parameter 'opportunity_id' is set
+        if ($opportunity_id === null || (is_array($opportunity_id) && count($opportunity_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $education_id when calling getConstituentEducation'
+                'Missing the required parameter $opportunity_id when calling getOpportunity'
             );
         }
 
-        $resourcePath = '/constituents/educations/{education_id}';
+        $resourcePath = '/opportunities/{opportunity_id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1078,10 +2642,10 @@ class ConstituentEducationApi
 
 
         // path params
-        if ($education_id !== null) {
+        if ($opportunity_id !== null) {
             $resourcePath = str_replace(
-                '{' . 'education_id' . '}',
-                ObjectSerializer::toPathValue($education_id),
+                '{' . 'opportunity_id' . '}',
+                ObjectSerializer::toPathValue($opportunity_id),
                 $resourcePath
             );
         }
@@ -1163,44 +2727,34 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listConstituentEducationsAllConstituents
+     * Operation listAttachmentTags
      *
-     * Education list (All constituents)
+     * Attachment tags
      *
-     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for education items created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for education items modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of education items. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
-     * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
-     * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
      */
-    public function listConstituentEducationsAllConstituents($date_added = null, $last_modified = null, $sort_token = null, $limit = null, $offset = null)
+    public function listAttachmentTags()
     {
-        list($response) = $this->listConstituentEducationsAllConstituentsWithHttpInfo($date_added, $last_modified, $sort_token, $limit, $offset);
+        list($response) = $this->listAttachmentTagsWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation listConstituentEducationsAllConstituentsWithHttpInfo
+     * Operation listAttachmentTagsWithHttpInfo
      *
-     * Education list (All constituents)
+     * Attachment tags
      *
-     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for education items created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for education items modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of education items. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
-     * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
-     * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listConstituentEducationsAllConstituentsWithHttpInfo($date_added = null, $last_modified = null, $sort_token = null, $limit = null, $offset = null)
+    public function listAttachmentTagsWithHttpInfo()
     {
-        $request = $this->listConstituentEducationsAllConstituentsRequest($date_added, $last_modified, $sort_token, $limit, $offset);
+        $request = $this->listAttachmentTagsRequest();
 
         try {
             $options = $this->createHttpClientOption();
@@ -1233,20 +2787,20 @@ class ConstituentEducationApi
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead' === '\SplFileObject') {
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead', []),
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead';
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -1265,7 +2819,7 @@ class ConstituentEducationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead',
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1276,22 +2830,17 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listConstituentEducationsAllConstituentsAsync
+     * Operation listAttachmentTagsAsync
      *
-     * Education list (All constituents)
+     * Attachment tags
      *
-     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for education items created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for education items modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of education items. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
-     * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
-     * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listConstituentEducationsAllConstituentsAsync($date_added = null, $last_modified = null, $sort_token = null, $limit = null, $offset = null)
+    public function listAttachmentTagsAsync()
     {
-        return $this->listConstituentEducationsAllConstituentsAsyncWithHttpInfo($date_added, $last_modified, $sort_token, $limit, $offset)
+        return $this->listAttachmentTagsAsyncWithHttpInfo()
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1300,23 +2849,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listConstituentEducationsAllConstituentsAsyncWithHttpInfo
+     * Operation listAttachmentTagsAsyncWithHttpInfo
      *
-     * Education list (All constituents)
+     * Attachment tags
      *
-     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for education items created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for education items modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of education items. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
-     * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
-     * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listConstituentEducationsAllConstituentsAsyncWithHttpInfo($date_added = null, $last_modified = null, $sort_token = null, $limit = null, $offset = null)
+    public function listAttachmentTagsAsyncWithHttpInfo()
     {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead';
-        $request = $this->listConstituentEducationsAllConstituentsRequest($date_added, $last_modified, $sort_token, $limit, $offset);
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
+        $request = $this->listAttachmentTagsRequest();
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1353,21 +2897,322 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'listConstituentEducationsAllConstituents'
+     * Create request for operation 'listAttachmentTags'
      *
-     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for education items created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for education items modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
-     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of education items. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listAttachmentTagsRequest()
+    {
+
+        $resourcePath = '/attachmenttags';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listOpportunities
+     *
+     * Opportunity list
+     *
+     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for opportunities created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for opportunities modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  bool $include_inactive Set this parameter to \&quot;true\&quot; to include inactive opportunities in the response. (optional)
+     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of opportunities. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
+     * @param  string $constituent_id Represents a list of constituent identifiers. Returns opportunities if any of the specified constituent identifiers match any of their constituents. For example, \&quot;constituent_id&#x3D;280&amp;amp;constituent_id&#x3D;1232\&quot; returns opportunities with either \&quot;280\&quot; or \&quot;1232\&quot; constituent identifiers. (optional)
+     * @param  string $list_id Defines a list identifier used to filter the set of opportunities to those included in the specified list. If this value is set, other specified filters will be ignored. (optional)
+     * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
+     * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionOpportunityRead
+     */
+    public function listOpportunities($date_added = null, $last_modified = null, $include_inactive = null, $sort_token = null, $constituent_id = null, $list_id = null, $limit = null, $offset = null)
+    {
+        list($response) = $this->listOpportunitiesWithHttpInfo($date_added, $last_modified, $include_inactive, $sort_token, $constituent_id, $list_id, $limit, $offset);
+        return $response;
+    }
+
+    /**
+     * Operation listOpportunitiesWithHttpInfo
+     *
+     * Opportunity list
+     *
+     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for opportunities created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for opportunities modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  bool $include_inactive Set this parameter to \&quot;true\&quot; to include inactive opportunities in the response. (optional)
+     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of opportunities. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
+     * @param  string $constituent_id Represents a list of constituent identifiers. Returns opportunities if any of the specified constituent identifiers match any of their constituents. For example, \&quot;constituent_id&#x3D;280&amp;amp;constituent_id&#x3D;1232\&quot; returns opportunities with either \&quot;280\&quot; or \&quot;1232\&quot; constituent identifiers. (optional)
+     * @param  string $list_id Defines a list identifier used to filter the set of opportunities to those included in the specified list. If this value is set, other specified filters will be ignored. (optional)
+     * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
+     * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionOpportunityRead, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listOpportunitiesWithHttpInfo($date_added = null, $last_modified = null, $include_inactive = null, $sort_token = null, $constituent_id = null, $list_id = null, $limit = null, $offset = null)
+    {
+        $request = $this->listOpportunitiesRequest($date_added, $last_modified, $include_inactive, $sort_token, $constituent_id, $list_id, $limit, $offset);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionOpportunityRead' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionOpportunityRead', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionOpportunityRead';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionOpportunityRead',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listOpportunitiesAsync
+     *
+     * Opportunity list
+     *
+     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for opportunities created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for opportunities modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  bool $include_inactive Set this parameter to \&quot;true\&quot; to include inactive opportunities in the response. (optional)
+     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of opportunities. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
+     * @param  string $constituent_id Represents a list of constituent identifiers. Returns opportunities if any of the specified constituent identifiers match any of their constituents. For example, \&quot;constituent_id&#x3D;280&amp;amp;constituent_id&#x3D;1232\&quot; returns opportunities with either \&quot;280\&quot; or \&quot;1232\&quot; constituent identifiers. (optional)
+     * @param  string $list_id Defines a list identifier used to filter the set of opportunities to those included in the specified list. If this value is set, other specified filters will be ignored. (optional)
+     * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
+     * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listOpportunitiesAsync($date_added = null, $last_modified = null, $include_inactive = null, $sort_token = null, $constituent_id = null, $list_id = null, $limit = null, $offset = null)
+    {
+        return $this->listOpportunitiesAsyncWithHttpInfo($date_added, $last_modified, $include_inactive, $sort_token, $constituent_id, $list_id, $limit, $offset)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listOpportunitiesAsyncWithHttpInfo
+     *
+     * Opportunity list
+     *
+     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for opportunities created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for opportunities modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  bool $include_inactive Set this parameter to \&quot;true\&quot; to include inactive opportunities in the response. (optional)
+     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of opportunities. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
+     * @param  string $constituent_id Represents a list of constituent identifiers. Returns opportunities if any of the specified constituent identifiers match any of their constituents. For example, \&quot;constituent_id&#x3D;280&amp;amp;constituent_id&#x3D;1232\&quot; returns opportunities with either \&quot;280\&quot; or \&quot;1232\&quot; constituent identifiers. (optional)
+     * @param  string $list_id Defines a list identifier used to filter the set of opportunities to those included in the specified list. If this value is set, other specified filters will be ignored. (optional)
+     * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
+     * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listOpportunitiesAsyncWithHttpInfo($date_added = null, $last_modified = null, $include_inactive = null, $sort_token = null, $constituent_id = null, $list_id = null, $limit = null, $offset = null)
+    {
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionOpportunityRead';
+        $request = $this->listOpportunitiesRequest($date_added, $last_modified, $include_inactive, $sort_token, $constituent_id, $list_id, $limit, $offset);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listOpportunities'
+     *
+     * @param  string $date_added Format - date-time (as date-time in RFC3339). Represents a filter for opportunities created on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  string $last_modified Format - date-time (as date-time in RFC3339). Represents a filter for opportunities modified on or after the specified date. The filter respects time offsets from UTC per the ISO-8601 format: 2016-05-05T17:59:31.1600745-04:00. (optional)
+     * @param  bool $include_inactive Set this parameter to \&quot;true\&quot; to include inactive opportunities in the response. (optional)
+     * @param  string $sort_token Represents a token filter to provide the next stable-sorted list of opportunities. This will be provided on the next_link collection response property when last_modified or sort_token filters are specified on the request. (optional)
+     * @param  string $constituent_id Represents a list of constituent identifiers. Returns opportunities if any of the specified constituent identifiers match any of their constituents. For example, \&quot;constituent_id&#x3D;280&amp;amp;constituent_id&#x3D;1232\&quot; returns opportunities with either \&quot;280\&quot; or \&quot;1232\&quot; constituent identifiers. (optional)
+     * @param  string $list_id Defines a list identifier used to filter the set of opportunities to those included in the specified list. If this value is set, other specified filters will be ignored. (optional)
      * @param  int $limit Format - int32. Represents the number of records to return. The default is 500. The maximum is 5000. (optional)
      * @param  int $offset Format - int32. Represents the number of records to skip. For use with pagination. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listConstituentEducationsAllConstituentsRequest($date_added = null, $last_modified = null, $sort_token = null, $limit = null, $offset = null)
+    public function listOpportunitiesRequest($date_added = null, $last_modified = null, $include_inactive = null, $sort_token = null, $constituent_id = null, $list_id = null, $limit = null, $offset = null)
     {
 
-        $resourcePath = '/educations';
+        $resourcePath = '/opportunities';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1389,11 +3234,32 @@ class ConstituentEducationApi
             $queryParams['last_modified'] = $last_modified;
         }
         // query params
+        if (is_array($include_inactive)) {
+            $include_inactive = ObjectSerializer::serializeCollection($include_inactive, '', true);
+        }
+        if ($include_inactive !== null) {
+            $queryParams['include_inactive'] = $include_inactive;
+        }
+        // query params
         if (is_array($sort_token)) {
             $sort_token = ObjectSerializer::serializeCollection($sort_token, '', true);
         }
         if ($sort_token !== null) {
             $queryParams['sort_token'] = $sort_token;
+        }
+        // query params
+        if (is_array($constituent_id)) {
+            $constituent_id = ObjectSerializer::serializeCollection($constituent_id, '', true);
+        }
+        if ($constituent_id !== null) {
+            $queryParams['constituent_id'] = $constituent_id;
+        }
+        // query params
+        if (is_array($list_id)) {
+            $list_id = ObjectSerializer::serializeCollection($list_id, '', true);
+        }
+        if ($list_id !== null) {
+            $queryParams['list_id'] = $list_id;
         }
         // query params
         if (is_array($limit)) {
@@ -1489,36 +3355,36 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listConstituentEducationsSingleConstituent
+     * Operation listOpportunityAttachmentsSingleOpportunity
      *
-     * Education list (Single constituent)
+     * Opportunity attachment list (Single opportunity)
      *
-     * @param  string $constituent_id The immutable system record ID of the constituent to retrieve the education items for. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve attachments for. (required)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionAttachmentRead
      */
-    public function listConstituentEducationsSingleConstituent($constituent_id)
+    public function listOpportunityAttachmentsSingleOpportunity($opportunity_id)
     {
-        list($response) = $this->listConstituentEducationsSingleConstituentWithHttpInfo($constituent_id);
+        list($response) = $this->listOpportunityAttachmentsSingleOpportunityWithHttpInfo($opportunity_id);
         return $response;
     }
 
     /**
-     * Operation listConstituentEducationsSingleConstituentWithHttpInfo
+     * Operation listOpportunityAttachmentsSingleOpportunityWithHttpInfo
      *
-     * Education list (Single constituent)
+     * Opportunity attachment list (Single opportunity)
      *
-     * @param  string $constituent_id The immutable system record ID of the constituent to retrieve the education items for. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve attachments for. (required)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionAttachmentRead, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listConstituentEducationsSingleConstituentWithHttpInfo($constituent_id)
+    public function listOpportunityAttachmentsSingleOpportunityWithHttpInfo($opportunity_id)
     {
-        $request = $this->listConstituentEducationsSingleConstituentRequest($constituent_id);
+        $request = $this->listOpportunityAttachmentsSingleOpportunityRequest($opportunity_id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1551,20 +3417,20 @@ class ConstituentEducationApi
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead' === '\SplFileObject') {
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionAttachmentRead' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead', []),
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionAttachmentRead', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead';
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionAttachmentRead';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -1583,7 +3449,7 @@ class ConstituentEducationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead',
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionAttachmentRead',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1594,18 +3460,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listConstituentEducationsSingleConstituentAsync
+     * Operation listOpportunityAttachmentsSingleOpportunityAsync
      *
-     * Education list (Single constituent)
+     * Opportunity attachment list (Single opportunity)
      *
-     * @param  string $constituent_id The immutable system record ID of the constituent to retrieve the education items for. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve attachments for. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listConstituentEducationsSingleConstituentAsync($constituent_id)
+    public function listOpportunityAttachmentsSingleOpportunityAsync($opportunity_id)
     {
-        return $this->listConstituentEducationsSingleConstituentAsyncWithHttpInfo($constituent_id)
+        return $this->listOpportunityAttachmentsSingleOpportunityAsyncWithHttpInfo($opportunity_id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1614,19 +3480,19 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listConstituentEducationsSingleConstituentAsyncWithHttpInfo
+     * Operation listOpportunityAttachmentsSingleOpportunityAsyncWithHttpInfo
      *
-     * Education list (Single constituent)
+     * Opportunity attachment list (Single opportunity)
      *
-     * @param  string $constituent_id The immutable system record ID of the constituent to retrieve the education items for. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve attachments for. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listConstituentEducationsSingleConstituentAsyncWithHttpInfo($constituent_id)
+    public function listOpportunityAttachmentsSingleOpportunityAsyncWithHttpInfo($opportunity_id)
     {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionEducationRead';
-        $request = $this->listConstituentEducationsSingleConstituentRequest($constituent_id);
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionAttachmentRead';
+        $request = $this->listOpportunityAttachmentsSingleOpportunityRequest($opportunity_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1663,23 +3529,23 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'listConstituentEducationsSingleConstituent'
+     * Create request for operation 'listOpportunityAttachmentsSingleOpportunity'
      *
-     * @param  string $constituent_id The immutable system record ID of the constituent to retrieve the education items for. (required)
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve attachments for. (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listConstituentEducationsSingleConstituentRequest($constituent_id)
+    public function listOpportunityAttachmentsSingleOpportunityRequest($opportunity_id)
     {
-        // verify the required parameter 'constituent_id' is set
-        if ($constituent_id === null || (is_array($constituent_id) && count($constituent_id) === 0)) {
+        // verify the required parameter 'opportunity_id' is set
+        if ($opportunity_id === null || (is_array($opportunity_id) && count($opportunity_id) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $constituent_id when calling listConstituentEducationsSingleConstituent'
+                'Missing the required parameter $opportunity_id when calling listOpportunityAttachmentsSingleOpportunity'
             );
         }
 
-        $resourcePath = '/constituents/{constituent_id}/educations';
+        $resourcePath = '/opportunities/{opportunity_id}/attachments';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1689,10 +3555,10 @@ class ConstituentEducationApi
 
 
         // path params
-        if ($constituent_id !== null) {
+        if ($opportunity_id !== null) {
             $resourcePath = str_replace(
-                '{' . 'constituent_id' . '}',
-                ObjectSerializer::toPathValue($constituent_id),
+                '{' . 'opportunity_id' . '}',
+                ObjectSerializer::toPathValue($opportunity_id),
                 $resourcePath
             );
         }
@@ -1774,34 +3640,34 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDegreeClasses
+     * Operation listOpportunityCustomFieldCategories
      *
-     * Education degree classes
+     * Opportunity custom field categories
      *
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldCategoryRead
      */
-    public function listEducationDegreeClasses()
+    public function listOpportunityCustomFieldCategories()
     {
-        list($response) = $this->listEducationDegreeClassesWithHttpInfo();
+        list($response) = $this->listOpportunityCustomFieldCategoriesWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation listEducationDegreeClassesWithHttpInfo
+     * Operation listOpportunityCustomFieldCategoriesWithHttpInfo
      *
-     * Education degree classes
+     * Opportunity custom field categories
      *
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldCategoryRead, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listEducationDegreeClassesWithHttpInfo()
+    public function listOpportunityCustomFieldCategoriesWithHttpInfo()
     {
-        $request = $this->listEducationDegreeClassesRequest();
+        $request = $this->listOpportunityCustomFieldCategoriesRequest();
 
         try {
             $options = $this->createHttpClientOption();
@@ -1834,20 +3700,20 @@ class ConstituentEducationApi
             $responseBody = $response->getBody();
             switch($statusCode) {
                 case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString' === '\SplFileObject') {
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldCategoryRead' === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
                     } else {
                         $content = (string) $responseBody;
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString', []),
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldCategoryRead', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldCategoryRead';
             $responseBody = $response->getBody();
             if ($returnType === '\SplFileObject') {
                 $content = $responseBody; //stream goes to serializer
@@ -1866,7 +3732,7 @@ class ConstituentEducationApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString',
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldCategoryRead',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1877,17 +3743,17 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDegreeClassesAsync
+     * Operation listOpportunityCustomFieldCategoriesAsync
      *
-     * Education degree classes
+     * Opportunity custom field categories
      *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listEducationDegreeClassesAsync()
+    public function listOpportunityCustomFieldCategoriesAsync()
     {
-        return $this->listEducationDegreeClassesAsyncWithHttpInfo()
+        return $this->listOpportunityCustomFieldCategoriesAsyncWithHttpInfo()
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1896,18 +3762,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDegreeClassesAsyncWithHttpInfo
+     * Operation listOpportunityCustomFieldCategoriesAsyncWithHttpInfo
      *
-     * Education degree classes
+     * Opportunity custom field categories
      *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listEducationDegreeClassesAsyncWithHttpInfo()
+    public function listOpportunityCustomFieldCategoriesAsyncWithHttpInfo()
     {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-        $request = $this->listEducationDegreeClassesRequest();
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldCategoryRead';
+        $request = $this->listOpportunityCustomFieldCategoriesRequest();
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1944,16 +3810,16 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'listEducationDegreeClasses'
+     * Create request for operation 'listOpportunityCustomFieldCategories'
      *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listEducationDegreeClassesRequest()
+    public function listOpportunityCustomFieldCategoriesRequest()
     {
 
-        $resourcePath = '/educations/degreeclasses';
+        $resourcePath = '/opportunities/customfields/categories';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2040,34 +3906,36 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDegrees
+     * Operation listOpportunityCustomFieldCategoryValues
      *
-     * Education degrees
+     * Opportunity custom field category values
      *
+     * @param  string $category_name The name of the category to return values for. (optional)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
      */
-    public function listEducationDegrees()
+    public function listOpportunityCustomFieldCategoryValues($category_name = null)
     {
-        list($response) = $this->listEducationDegreesWithHttpInfo();
+        list($response) = $this->listOpportunityCustomFieldCategoryValuesWithHttpInfo($category_name);
         return $response;
     }
 
     /**
-     * Operation listEducationDegreesWithHttpInfo
+     * Operation listOpportunityCustomFieldCategoryValuesWithHttpInfo
      *
-     * Education degrees
+     * Opportunity custom field category values
      *
+     * @param  string $category_name The name of the category to return values for. (optional)
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listEducationDegreesWithHttpInfo()
+    public function listOpportunityCustomFieldCategoryValuesWithHttpInfo($category_name = null)
     {
-        $request = $this->listEducationDegreesRequest();
+        $request = $this->listOpportunityCustomFieldCategoryValuesRequest($category_name);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2143,17 +4011,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDegreesAsync
+     * Operation listOpportunityCustomFieldCategoryValuesAsync
      *
-     * Education degrees
+     * Opportunity custom field category values
      *
+     * @param  string $category_name The name of the category to return values for. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listEducationDegreesAsync()
+    public function listOpportunityCustomFieldCategoryValuesAsync($category_name = null)
     {
-        return $this->listEducationDegreesAsyncWithHttpInfo()
+        return $this->listOpportunityCustomFieldCategoryValuesAsyncWithHttpInfo($category_name)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2162,18 +4031,19 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDegreesAsyncWithHttpInfo
+     * Operation listOpportunityCustomFieldCategoryValuesAsyncWithHttpInfo
      *
-     * Education degrees
+     * Opportunity custom field category values
      *
+     * @param  string $category_name The name of the category to return values for. (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listEducationDegreesAsyncWithHttpInfo()
+    public function listOpportunityCustomFieldCategoryValuesAsyncWithHttpInfo($category_name = null)
     {
         $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-        $request = $this->listEducationDegreesRequest();
+        $request = $this->listOpportunityCustomFieldCategoryValuesRequest($category_name);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2210,16 +4080,575 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'listEducationDegrees'
+     * Create request for operation 'listOpportunityCustomFieldCategoryValues'
+     *
+     * @param  string $category_name The name of the category to return values for. (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listOpportunityCustomFieldCategoryValuesRequest($category_name = null)
+    {
+
+        $resourcePath = '/opportunities/customfields/categories/values';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if (is_array($category_name)) {
+            $category_name = ObjectSerializer::serializeCollection($category_name, '', true);
+        }
+        if ($category_name !== null) {
+            $queryParams['category_name'] = $category_name;
+        }
+
+
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listOpportunityCustomFieldsSingleOpportunity
+     *
+     * Opportunity custom field list (Single opportunity)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve the custom fields for. (required)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldRead
+     */
+    public function listOpportunityCustomFieldsSingleOpportunity($opportunity_id)
+    {
+        list($response) = $this->listOpportunityCustomFieldsSingleOpportunityWithHttpInfo($opportunity_id);
+        return $response;
+    }
+
+    /**
+     * Operation listOpportunityCustomFieldsSingleOpportunityWithHttpInfo
+     *
+     * Opportunity custom field list (Single opportunity)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve the custom fields for. (required)
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldRead, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listOpportunityCustomFieldsSingleOpportunityWithHttpInfo($opportunity_id)
+    {
+        $request = $this->listOpportunityCustomFieldsSingleOpportunityRequest($opportunity_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldRead' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldRead', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldRead';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldRead',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listOpportunityCustomFieldsSingleOpportunityAsync
+     *
+     * Opportunity custom field list (Single opportunity)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve the custom fields for. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listOpportunityCustomFieldsSingleOpportunityAsync($opportunity_id)
+    {
+        return $this->listOpportunityCustomFieldsSingleOpportunityAsyncWithHttpInfo($opportunity_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listOpportunityCustomFieldsSingleOpportunityAsyncWithHttpInfo
+     *
+     * Opportunity custom field list (Single opportunity)
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve the custom fields for. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listOpportunityCustomFieldsSingleOpportunityAsyncWithHttpInfo($opportunity_id)
+    {
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionCustomFieldRead';
+        $request = $this->listOpportunityCustomFieldsSingleOpportunityRequest($opportunity_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listOpportunityCustomFieldsSingleOpportunity'
+     *
+     * @param  string $opportunity_id The immutable system record ID of the opportunity to retrieve the custom fields for. (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function listOpportunityCustomFieldsSingleOpportunityRequest($opportunity_id)
+    {
+        // verify the required parameter 'opportunity_id' is set
+        if ($opportunity_id === null || (is_array($opportunity_id) && count($opportunity_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $opportunity_id when calling listOpportunityCustomFieldsSingleOpportunity'
+            );
+        }
+
+        $resourcePath = '/opportunities/{opportunity_id}/customfields';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($opportunity_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'opportunity_id' . '}',
+                ObjectSerializer::toPathValue($opportunity_id),
+                $resourcePath
+            );
+        }
+
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
+        if ($apiKey !== null) {
+            $headers['Bb-Api-Subscription-Key'] = $apiKey;
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
+        if ($apiKey !== null) {
+            $queryParams['subscription-key'] = $apiKey;
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listOpportunityPurposes
+     *
+     * Opportunity purposes
+     *
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
+     */
+    public function listOpportunityPurposes()
+    {
+        list($response) = $this->listOpportunityPurposesWithHttpInfo();
+        return $response;
+    }
+
+    /**
+     * Operation listOpportunityPurposesWithHttpInfo
+     *
+     * Opportunity purposes
+     *
+     *
+     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listOpportunityPurposesWithHttpInfo()
+    {
+        $request = $this->listOpportunityPurposesRequest();
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            switch($statusCode) {
+                case 200:
+                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString' === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+            }
+
+            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = (string) $responseBody;
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listOpportunityPurposesAsync
+     *
+     * Opportunity purposes
+     *
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listOpportunityPurposesAsync()
+    {
+        return $this->listOpportunityPurposesAsyncWithHttpInfo()
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listOpportunityPurposesAsyncWithHttpInfo
+     *
+     * Opportunity purposes
+     *
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listOpportunityPurposesAsyncWithHttpInfo()
+    {
+        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
+        $request = $this->listOpportunityPurposesRequest();
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = (string) $responseBody;
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listOpportunityPurposes'
      *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listEducationDegreesRequest()
+    public function listOpportunityPurposesRequest()
     {
 
-        $resourcePath = '/educations/degrees';
+        $resourcePath = '/opportunitypurposes';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2306,34 +4735,34 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDepartments
+     * Operation listOpportunityStatuses
      *
-     * Education departments
+     * Opportunity statuses
      *
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
      */
-    public function listEducationDepartments()
+    public function listOpportunityStatuses()
     {
-        list($response) = $this->listEducationDepartmentsWithHttpInfo();
+        list($response) = $this->listOpportunityStatusesWithHttpInfo();
         return $response;
     }
 
     /**
-     * Operation listEducationDepartmentsWithHttpInfo
+     * Operation listOpportunityStatusesWithHttpInfo
      *
-     * Education departments
+     * Opportunity statuses
      *
      *
      * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listEducationDepartmentsWithHttpInfo()
+    public function listOpportunityStatusesWithHttpInfo()
     {
-        $request = $this->listEducationDepartmentsRequest();
+        $request = $this->listOpportunityStatusesRequest();
 
         try {
             $options = $this->createHttpClientOption();
@@ -2409,17 +4838,17 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDepartmentsAsync
+     * Operation listOpportunityStatusesAsync
      *
-     * Education departments
+     * Opportunity statuses
      *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listEducationDepartmentsAsync()
+    public function listOpportunityStatusesAsync()
     {
-        return $this->listEducationDepartmentsAsyncWithHttpInfo()
+        return $this->listOpportunityStatusesAsyncWithHttpInfo()
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2428,18 +4857,18 @@ class ConstituentEducationApi
     }
 
     /**
-     * Operation listEducationDepartmentsAsyncWithHttpInfo
+     * Operation listOpportunityStatusesAsyncWithHttpInfo
      *
-     * Education departments
+     * Opportunity statuses
      *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listEducationDepartmentsAsyncWithHttpInfo()
+    public function listOpportunityStatusesAsyncWithHttpInfo()
     {
         $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-        $request = $this->listEducationDepartmentsRequest();
+        $request = $this->listOpportunityStatusesRequest();
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2476,1346 +4905,16 @@ class ConstituentEducationApi
     }
 
     /**
-     * Create request for operation 'listEducationDepartments'
+     * Create request for operation 'listOpportunityStatuses'
      *
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listEducationDepartmentsRequest()
+    public function listOpportunityStatusesRequest()
     {
 
-        $resourcePath = '/educations/departments';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
-        if ($apiKey !== null) {
-            $headers['Bb-Api-Subscription-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
-        if ($apiKey !== null) {
-            $queryParams['subscription-key'] = $apiKey;
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation listEducationFaculties
-     *
-     * Education faculties
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
-     */
-    public function listEducationFaculties()
-    {
-        list($response) = $this->listEducationFacultiesWithHttpInfo();
-        return $response;
-    }
-
-    /**
-     * Operation listEducationFacultiesWithHttpInfo
-     *
-     * Education faculties
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function listEducationFacultiesWithHttpInfo()
-    {
-        $request = $this->listEducationFacultiesRequest();
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = (string) $responseBody;
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation listEducationFacultiesAsync
-     *
-     * Education faculties
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationFacultiesAsync()
-    {
-        return $this->listEducationFacultiesAsyncWithHttpInfo()
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation listEducationFacultiesAsyncWithHttpInfo
-     *
-     * Education faculties
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationFacultiesAsyncWithHttpInfo()
-    {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-        $request = $this->listEducationFacultiesRequest();
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'listEducationFaculties'
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function listEducationFacultiesRequest()
-    {
-
-        $resourcePath = '/educations/faculties';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
-        if ($apiKey !== null) {
-            $headers['Bb-Api-Subscription-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
-        if ($apiKey !== null) {
-            $queryParams['subscription-key'] = $apiKey;
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation listEducationSchools
-     *
-     * Education schools
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
-     */
-    public function listEducationSchools()
-    {
-        list($response) = $this->listEducationSchoolsWithHttpInfo();
-        return $response;
-    }
-
-    /**
-     * Operation listEducationSchoolsWithHttpInfo
-     *
-     * Education schools
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function listEducationSchoolsWithHttpInfo()
-    {
-        $request = $this->listEducationSchoolsRequest();
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = (string) $responseBody;
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation listEducationSchoolsAsync
-     *
-     * Education schools
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationSchoolsAsync()
-    {
-        return $this->listEducationSchoolsAsyncWithHttpInfo()
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation listEducationSchoolsAsyncWithHttpInfo
-     *
-     * Education schools
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationSchoolsAsyncWithHttpInfo()
-    {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-        $request = $this->listEducationSchoolsRequest();
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'listEducationSchools'
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function listEducationSchoolsRequest()
-    {
-
-        $resourcePath = '/educations/schools';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
-        if ($apiKey !== null) {
-            $headers['Bb-Api-Subscription-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
-        if ($apiKey !== null) {
-            $queryParams['subscription-key'] = $apiKey;
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation listEducationStatuses
-     *
-     * Education statuses
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
-     */
-    public function listEducationStatuses()
-    {
-        list($response) = $this->listEducationStatusesWithHttpInfo();
-        return $response;
-    }
-
-    /**
-     * Operation listEducationStatusesWithHttpInfo
-     *
-     * Education statuses
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function listEducationStatusesWithHttpInfo()
-    {
-        $request = $this->listEducationStatusesRequest();
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = (string) $responseBody;
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation listEducationStatusesAsync
-     *
-     * Education statuses
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationStatusesAsync()
-    {
-        return $this->listEducationStatusesAsyncWithHttpInfo()
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation listEducationStatusesAsyncWithHttpInfo
-     *
-     * Education statuses
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationStatusesAsyncWithHttpInfo()
-    {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-        $request = $this->listEducationStatusesRequest();
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'listEducationStatuses'
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function listEducationStatusesRequest()
-    {
-
-        $resourcePath = '/educations/statuses';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
-        if ($apiKey !== null) {
-            $headers['Bb-Api-Subscription-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
-        if ($apiKey !== null) {
-            $queryParams['subscription-key'] = $apiKey;
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation listEducationSubjects
-     *
-     * Education subjects
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
-     */
-    public function listEducationSubjects()
-    {
-        list($response) = $this->listEducationSubjectsWithHttpInfo();
-        return $response;
-    }
-
-    /**
-     * Operation listEducationSubjectsWithHttpInfo
-     *
-     * Education subjects
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function listEducationSubjectsWithHttpInfo()
-    {
-        $request = $this->listEducationSubjectsRequest();
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = (string) $responseBody;
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation listEducationSubjectsAsync
-     *
-     * Education subjects
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationSubjectsAsync()
-    {
-        return $this->listEducationSubjectsAsyncWithHttpInfo()
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation listEducationSubjectsAsyncWithHttpInfo
-     *
-     * Education subjects
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationSubjectsAsyncWithHttpInfo()
-    {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-        $request = $this->listEducationSubjectsRequest();
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'listEducationSubjects'
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function listEducationSubjectsRequest()
-    {
-
-        $resourcePath = '/educations/subjects';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Bb-Api-Subscription-Key');
-        if ($apiKey !== null) {
-            $headers['Bb-Api-Subscription-Key'] = $apiKey;
-        }
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('subscription-key');
-        if ($apiKey !== null) {
-            $queryParams['subscription-key'] = $apiKey;
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation listEducationTypes
-     *
-     * Education types
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString
-     */
-    public function listEducationTypes()
-    {
-        list($response) = $this->listEducationTypesWithHttpInfo();
-        return $response;
-    }
-
-    /**
-     * Operation listEducationTypesWithHttpInfo
-     *
-     * Education types
-     *
-     *
-     * @throws \BurgerDigital\BlackbaudPhpSdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function listEducationTypesWithHttpInfo()
-    {
-        $request = $this->listEducationTypesRequest();
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            switch($statusCode) {
-                case 200:
-                    if ('\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString' === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = (string) $responseBody;
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation listEducationTypesAsync
-     *
-     * Education types
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationTypesAsync()
-    {
-        return $this->listEducationTypesAsyncWithHttpInfo()
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation listEducationTypesAsyncWithHttpInfo
-     *
-     * Education types
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listEducationTypesAsyncWithHttpInfo()
-    {
-        $returnType = '\BurgerDigital\BlackbaudPhpSdk\Model\ApiCollectionString';
-        $request = $this->listEducationTypesRequest();
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = (string) $responseBody;
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'listEducationTypes'
-     *
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function listEducationTypesRequest()
-    {
-
-        $resourcePath = '/educations/types';
+        $resourcePath = '/opportunitystatuses';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];

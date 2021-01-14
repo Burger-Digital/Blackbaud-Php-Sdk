@@ -1,6 +1,6 @@
 <?php
 /**
- * ApiCollectionCustomFieldCategoryReadTest
+ * ApiCollectionOpportunityReadTest
  *
  * PHP version 7.2
  *
@@ -32,7 +32,7 @@ namespace BurgerDigital\BlackbaudPhpSdk\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * ApiCollectionCustomFieldCategoryReadTest Class Doc Comment
+ * ApiCollectionOpportunityReadTest Class Doc Comment
  *
  * @category    Class
  * @description Fetching data all at once quickly becomes unmanageable. The collection entity helps by returning paginated chunks of large data sets. This entity includes helpful metadata and properties to paginate and iterate through the data.
@@ -40,7 +40,7 @@ use PHPUnit\Framework\TestCase;
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class ApiCollectionCustomFieldCategoryReadTest extends TestCase
+class ApiCollectionOpportunityReadTest extends TestCase
 {
 
     /**
@@ -72,9 +72,9 @@ class ApiCollectionCustomFieldCategoryReadTest extends TestCase
     }
 
     /**
-     * Test "ApiCollectionCustomFieldCategoryRead"
+     * Test "ApiCollectionOpportunityRead"
      */
-    public function testApiCollectionCustomFieldCategoryRead()
+    public function testApiCollectionOpportunityRead()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

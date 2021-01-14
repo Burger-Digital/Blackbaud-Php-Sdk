@@ -1,6 +1,6 @@
 <?php
 /**
- * AttachmentReadTest
+ * OpportunityReadTest
  *
  * PHP version 7.2
  *
@@ -32,15 +32,15 @@ namespace BurgerDigital\BlackbaudPhpSdk\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * AttachmentReadTest Class Doc Comment
+ * OpportunityReadTest Class Doc Comment
  *
  * @category    Class
- * @description Many cultivation activities collect related collateral, such as correspondence and prospect research. Attachments can save this data on the appropriate record to maintain a complete view of those activities.
+ * @description Opportunities help you plan and track efforts to build relationships with prospects and secure major gifts. They can manage information about fundraising activities and the effectiveness of your efforts.
  * @package     BurgerDigital\BlackbaudPhpSdk
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class AttachmentReadTest extends TestCase
+class OpportunityReadTest extends TestCase
 {
 
     /**
@@ -72,9 +72,9 @@ class AttachmentReadTest extends TestCase
     }
 
     /**
-     * Test "AttachmentRead"
+     * Test "OpportunityRead"
      */
-    public function testAttachmentRead()
+    public function testOpportunityRead()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -90,45 +90,135 @@ class AttachmentReadTest extends TestCase
     }
 
     /**
-     * Test attribute "content_type"
+     * Test attribute "ask_amount"
      */
-    public function testPropertyContentType()
+    public function testPropertyAskAmount()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "date"
+     * Test attribute "ask_date"
      */
-    public function testPropertyDate()
+    public function testPropertyAskDate()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "file_id"
+     * Test attribute "campaign_id"
      */
-    public function testPropertyFileId()
+    public function testPropertyCampaignId()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "file_name"
+     * Test attribute "constituent_id"
      */
-    public function testPropertyFileName()
+    public function testPropertyConstituentId()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "file_size"
+     * Test attribute "date_added"
      */
-    public function testPropertyFileSize()
+    public function testPropertyDateAdded()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "date_modified"
+     */
+    public function testPropertyDateModified()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "deadline"
+     */
+    public function testPropertyDeadline()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "expected_amount"
+     */
+    public function testPropertyExpectedAmount()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "expected_date"
+     */
+    public function testPropertyExpectedDate()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "fund_id"
+     */
+    public function testPropertyFundId()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "funded_amount"
+     */
+    public function testPropertyFundedAmount()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "funded_date"
+     */
+    public function testPropertyFundedDate()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "fundraisers"
+     */
+    public function testPropertyFundraisers()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "inactive"
+     */
+    public function testPropertyInactive()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "linked_gifts"
+     */
+    public function testPropertyLinkedGifts()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -144,54 +234,18 @@ class AttachmentReadTest extends TestCase
     }
 
     /**
-     * Test attribute "parent_id"
+     * Test attribute "purpose"
      */
-    public function testPropertyParentId()
+    public function testPropertyPurpose()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "tags"
+     * Test attribute "status"
      */
-    public function testPropertyTags()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "thumbnail_id"
-     */
-    public function testPropertyThumbnailId()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "thumbnail_url"
-     */
-    public function testPropertyThumbnailUrl()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "type"
-     */
-    public function testPropertyType()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "url"
-     */
-    public function testPropertyUrl()
+    public function testPropertyStatus()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

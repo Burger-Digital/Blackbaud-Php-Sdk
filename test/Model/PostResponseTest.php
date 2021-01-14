@@ -11,9 +11,9 @@
  */
 
 /**
- * Constituent
+ * Opportunity
  *
- * This API manages constituent information and related entities such as addresses, phones, emails, and notes.
+ * This API manages opportunity information and related entities such as opportunity fundraisers, opportunity attachments, and opportunity custom fields.
  *
  * The version of the OpenAPI document: 1.0
  * 

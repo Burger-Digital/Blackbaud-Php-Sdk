@@ -28,16 +28,16 @@
 
 namespace BurgerDigital\BlackbaudPhpSdk\Api;
 
+use BurgerDigital\BlackbaudPhpSdk\ApiException;
+use BurgerDigital\BlackbaudPhpSdk\Configuration;
+use BurgerDigital\BlackbaudPhpSdk\HeaderSelector;
+use BurgerDigital\BlackbaudPhpSdk\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use BurgerDigital\BlackbaudPhpSdk\ApiException;
-use BurgerDigital\BlackbaudPhpSdk\Configuration;
-use BurgerDigital\BlackbaudPhpSdk\HeaderSelector;
-use BurgerDigital\BlackbaudPhpSdk\ObjectSerializer;
 
 /**
  * AddressApi Class Doc Comment

@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .php_cs
 .travis.yml
 README.md
@@ -312,15 +311,12 @@ test/Model/ApiCollectionActionReadTest.php
 test/Model/ApiCollectionAddressReadExtendedTest.php
 test/Model/ApiCollectionAddressReadTest.php
 test/Model/ApiCollectionAliasReadTest.php
-test/Model/ApiCollectionAttachmentReadTest.php
 test/Model/ApiCollectionCommunicationPreferenceReadTest.php
 test/Model/ApiCollectionConstituentAppealReadTest.php
 test/Model/ApiCollectionConstituentCodeReadTest.php
 test/Model/ApiCollectionConstituentFundraiserReadTest.php
 test/Model/ApiCollectionConstituentListItemTest.php
 test/Model/ApiCollectionCountryReadTest.php
-test/Model/ApiCollectionCustomFieldCategoryReadTest.php
-test/Model/ApiCollectionCustomFieldReadTest.php
 test/Model/ApiCollectionEducationReadTest.php
 test/Model/ApiCollectionEmailAddressReadTest.php
 test/Model/ApiCollectionFundraiserAssignmentReadTest.php
@@ -334,13 +330,8 @@ test/Model/ApiCollectionRatingReadTest.php
 test/Model/ApiCollectionRatingSourceReadTest.php
 test/Model/ApiCollectionRelationshipReadTest.php
 test/Model/ApiCollectionSearchResultReadTest.php
-test/Model/ApiCollectionStringTest.php
-test/Model/ApiCollectionTest.php
 test/Model/AppealCategoryReadTest.php
 test/Model/AppealReadTest.php
-test/Model/AttachmentAddTest.php
-test/Model/AttachmentEditTest.php
-test/Model/AttachmentReadTest.php
 test/Model/CampaignReadTest.php
 test/Model/CommunicationPreferenceAddTest.php
 test/Model/CommunicationPreferenceEditTest.php
@@ -360,11 +351,6 @@ test/Model/ConstituentPhoneAddTest.php
 test/Model/ConstituentReadTest.php
 test/Model/CountryReadTest.php
 test/Model/CurrencyConfigurationReadTest.php
-test/Model/CurrencyTest.php
-test/Model/CustomFieldAddTest.php
-test/Model/CustomFieldCategoryReadTest.php
-test/Model/CustomFieldEditTest.php
-test/Model/CustomFieldReadTest.php
 test/Model/EducationAddTest.php
 test/Model/EducationEditTest.php
 test/Model/EducationReadTest.php
@@ -372,12 +358,10 @@ test/Model/EmailAddressAddTest.php
 test/Model/EmailAddressEditTest.php
 test/Model/EmailAddressReadTest.php
 test/Model/ErrorCodeTest.php
-test/Model/FileDefinitionTest.php
 test/Model/FundReadTest.php
 test/Model/FundraiserAssignmentReadTest.php
 test/Model/FuzzyDateTest.php
 test/Model/GivingSummaryReadTest.php
-test/Model/HeaderTest.php
 test/Model/LifetimeGivingReadTest.php
 test/Model/MembershipMemberReadTest.php
 test/Model/MembershipReadTest.php
@@ -386,7 +370,6 @@ test/Model/NameFormatConfigurationReadTest.php
 test/Model/NameFormatEditTest.php
 test/Model/NameFormatReadTest.php
 test/Model/NameFormatSummaryReadTest.php
-test/Model/NewDocumentInfoTest.php
 test/Model/NonConstituentAddTest.php
 test/Model/NoteAddTest.php
 test/Model/NoteEditTest.php
@@ -398,7 +381,6 @@ test/Model/PackageReadTest.php
 test/Model/PhoneAddTest.php
 test/Model/PhoneEditTest.php
 test/Model/PhoneReadTest.php
-test/Model/PostResponseTest.php
 test/Model/PrimaryNameFormatAddTest.php
 test/Model/PrimaryNameFormatEditTest.php
 test/Model/PrimaryNameFormatReadTest.php
@@ -413,6 +395,5 @@ test/Model/RatingSourceReadTest.php
 test/Model/RelationshipAddTest.php
 test/Model/RelationshipEditTest.php
 test/Model/RelationshipReadTest.php
-test/Model/RequestMetaDataTest.php
 test/Model/SearchResultReadTest.php
 test/Model/SpouseReadTest.php

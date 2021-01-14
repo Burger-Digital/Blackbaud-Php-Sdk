@@ -1,6 +1,6 @@
 <?php
 /**
- * ApiCollectionCustomFieldCategoryReadTest
+ * FundraiserTest
  *
  * PHP version 7.2
  *
@@ -32,15 +32,15 @@ namespace BurgerDigital\BlackbaudPhpSdk\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * ApiCollectionCustomFieldCategoryReadTest Class Doc Comment
+ * FundraiserTest Class Doc Comment
  *
  * @category    Class
- * @description Fetching data all at once quickly becomes unmanageable. The collection entity helps by returning paginated chunks of large data sets. This entity includes helpful metadata and properties to paginate and iterate through the data.
+ * @description Fundraiser constituents interact with other constituents and prospects on behalf of your organization to cultivate relationships and advance opportunities to secure major gifts. When the target constituent fulfills an opportunity ask, the fundraiser can receive credit to track performance and foster fundraising accomplishments.
  * @package     BurgerDigital\BlackbaudPhpSdk
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class ApiCollectionCustomFieldCategoryReadTest extends TestCase
+class FundraiserTest extends TestCase
 {
 
     /**
@@ -72,36 +72,27 @@ class ApiCollectionCustomFieldCategoryReadTest extends TestCase
     }
 
     /**
-     * Test "ApiCollectionCustomFieldCategoryRead"
+     * Test "Fundraiser"
      */
-    public function testApiCollectionCustomFieldCategoryRead()
+    public function testFundraiser()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "count"
+     * Test attribute "constituent_id"
      */
-    public function testPropertyCount()
+    public function testPropertyConstituentId()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "next_link"
+     * Test attribute "credit_amount"
      */
-    public function testPropertyNextLink()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "value"
-     */
-    public function testPropertyValue()
+    public function testPropertyCreditAmount()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
